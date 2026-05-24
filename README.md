@@ -1,3 +1,7 @@
+TEST EDEBİLECEĞİNİZ SİTE: [https://yugohubo.github.io/Command-Ops-2-Advisor-Kurmay-YZ/]
+
+
+
 # ⚔️ COPS-2 TAC-COM // Tactical AI Advisor & Wargame Command Suite
 
 **COPS-2 TAC-COM (Command Ops 2 Tactical Command & Advisory Suite)**, Panther Games tarafından geliştirilen gerçekçi operasyonel savaş oyunu **Command Ops 2** için tasarlanmış askeri karargah temalı bir yardımcı komuta konsolu, taktiksel hesaplama motoru ve yerel yapay zeka entegrasyonuna sahip kurmay danışmanıdır.
