@@ -1,0 +1,91 @@
+{
+  "order_delay": {
+    "title": "Order Delay (Emir Gecikmesi)",
+    "pages": [
+      121,
+      149,
+      150
+    ],
+    "raw_snippet": "121 Copyright Panther Games Pty Ltd 2015.\nAll Rights Reserved.\nPlan When to Issue Orders The key to playing effectively with Orders Delay is deciding when to issue your orders.\nTo have a force start carrying out an order at a particular time, you will need to issue the order early enough for them to receive it.\nTo have them complete a task at a particular time, you will need to issue the order early enough for them to both receive it and carry it out!\nTo find out how long it will take your units to receive and process your orders:  Select the HQ commanding the force you want to issue orders to  Open its Force Data dialog  Select the Cmdr Tab on the Sidebar  The Force Delay field tells you roughly how long it will take, in minutes, for all the units commanded by that HQ to receive an order and start moving.\n When you form a new battlegroup the Force Delay value will not be valid until the boss of the battlegroup has processed its orders.\nLearning how long it will take for units to carry out an order to completion is a bit trickier.\nIn part, it comes from experience – practice issuing orders and noting down the time at which they were received, how long it took your units to move and how long it took them to finish the order.\nYou can use a couple of very rough rules-of-thumb to estimate movement speeds for units moving in formation (these depend on the Mobility Type of your forces – see Mixed-Mode Movement ):  Motorised Units – average normal speed is 12 km/h on good roads  Non-Motorised ( Foot ) Units – average normal speed is 3 km/h on good roads Tired units move slower.\nContact with the enemy will make moves a lot slower!\nTo see how to coordinate orders from different HQ’s so that they execute at similar times see Set Start, End, and Assault At times.\n Note that units routing or rout recovering do not process orders.\nLearning to work with order delays often means issuing new orders before the current set have fully completed.\nFor example, an attack has been largely successful and is in the final reorg or the exploit beyond the objective phase, you might consider issuing new orders for the defensive formation, footprint, and facing at this point.\nHowever, one of the worst times to issue new orders is in the middle of an attack.\n=== PAGE === 149 Copyright Panther Games Pty Ltd 2015.\nAll Rights Reserved.\nBecause the base delay increases as the force size of the effective sender goes up:  Keep your units near their organic superiors, even if you are issuing orders directly to them.\nDistance Another factor in Orders Delay is distance.\nThe further away a unit is from its HQ, the longer it will take to receive orders.\nDistance has more of an impact if the HQ issuing orders is not motorised (either tracked or wheeled), because motorised units generally have more powerful radios – and more of them!\nFoot and horse-drawn units often have to rely on runners to get orders through so their subordinates need to keep closer.\nDistance is always calculat"
+  },
+  "supply": {
+    "title": "Line of Supply (İkmal Lojistik Hatları)",
+    "pages": [
+      49,
+      115,
+      169
+    ],
+    "raw_snippet": "49 Copyright Panther Games Pty Ltd 2015.\nAll Rights Reserved.\nSupply lines indicate the last determined status of the supply line between the selected unit back up to its supply source ( Base or Supply Entry Point ) and, in the case of Bases, down to it’s drawing units.\n Click on the Cmd/Sup Lines button on the Display Toolbar till it shows Sup  Select a unit Note that in this example we have selected the Rgt Base.\nIt’s supply source is the Div Base.\nSimilar to Command Lines, supply lines are only displayed for a single selected unit.\nThey will not be displayed when more than one unit is selected.\nAlso note that the status is not necessarily current.\nIt is based on the time the supply line was last determined for the units.\nThis may be several hours old and the situation may now be different – eg.\nit may show as open but now it is obvious they are cut off.\n( The reason why current data is not displayed here, is that the processor load to determine the different supply routes would slow the game down inordinately.\n) === PAGE === 115 Copyright Panther Games Pty Ltd 2015.\nAll Rights Reserved.\nTo view the schedule using a different graph type ( stacked columns, columns or Lines ):  Click on the desired graph type buttons The Columns graph is useful to see the individual values of each SEP for each day.\nThe Lines graph is good for discerning trends.\nNote in this example that the line for SEP1 is masked by the lines for SEP2 as this has the same values.\nAs with the Stacked Columns graph, you can see the data for a particular SEP by clicking on its key symbol or on its column or line.\nGet Your Units Back in Supply Units that have their supply lines cut will not receive any resupply.\nIn the interim they will continue to draw down their existing stocks.\nNormally you could expect a force cut off from its Base to last around 48 hours.\nOnce their existing stocks are used up, they will be in peril.\nWithout ammo they will not be able to defend themselves.\nWithout fuel motorised units will not be able to move and without Basics they will fatigue very quickly and recover from fatigue very slowly.\nWithout Basics their morale will also start to drop.\nThey will become very ineffective and will become increasingly more likely to surrender to the enemy.\nSo it’s important to try and get your units back in supply before these dire effects take place.\nThe best option for doing so will depend on the situation.\nRemember that a supply line can be cut by effective enemy fire.\nYou may need to clear a wide area to make your supply line safe.\nTo re-establish a line of supply:  Withdraw to friendly controlled territory or  Send a relieving force to clear a supply line to the cut off force or  Send a small group from the cut off force back towards the supplying base with a view to determine where the enemy is cutting the line.\nThen if this is insufficient by itself, commit other forces to clear the way or  If the Base itself is threatened ( you will receive a message ), m"
+  },
+  "fatigue": {
+    "title": "Fatigue and Rest (Yorgunluk ve Dinlenme)",
+    "pages": [
+      40,
+      44,
+      62,
+      69,
+      84,
+      87,
+      104,
+      105,
+      106,
+      115,
+      116,
+      137,
+      139,
+      145,
+      146,
+      151,
+      164,
+      167,
+      169,
+      172,
+      173,
+      176,
+      196,
+      201
+    ],
+    "raw_snippet": "GAME MANUAL 40 Copyright Panther Games Pty Ltd 2015.\nAll Rights Reserved.\nCheck the Weather The current weather is displayed at the top right of the Controls dialog.\nTo see additional information:  Hold the mouse pointer over the weather display After a short delay a Tooltip appears.\nThe visibility range shown is the theoretical maximum visibility in Clear terrain given the current time of day and weather – this distance will be reduced significantly in practice by map terrain, obstacles, and unit posture.\nFor instance, an infantry unit deployed in woods may only be visible if the observer is within several hundred metres.\nExtreme temperatures will reduce your troops ability to recover fatigue, expecially if they are not in urban terrain.\nIdentify Impassable Terrain Not all areas on the map can be travelled by your units.\nMotorised units, in particular, are restricted in the areas they can reach – see Mixed-Mode Movement.\nAs in real life, there is often no sure way to know whether your units will be able to cross a particular obstacle other than trying it out; but there are some rules of thumb that can help:  Areas marked as Impassable will be off-limits to all units  Major Rivers, Seas and Lakes will block the movement of all units  Minor Rivers and Marshes will block the movement of motorised units  Slopes over 30º will block the movement of motorised units, unless there is a road present  Slopes over 60º will block the movement of all units, unless there is a road present To identify those areas of the map that are passable to motorised units:  Select the Motorise Movement Overlay from the Overlays buitton on the toolbar.\nNote the dark blue shading indicates best movement, light blue is good, light green is OK and dark green is proor.\nUnshaded areas are impassable.\nIn this example the impassable areas are woods or rivers, except where there is a road crossing.\nNote also that the overlays only work while the game is paused.\n=== PAGE === GAME MANUAL 44 Copyright Panther Games Pty Ltd 2015.\nAll Rights Reserved.\nUse the Toolbar The Toolbar is located at the bottom of the screen.\nIt has a series of buttons that allow you to show, hide and filter information on unit icons and the Battlemap in general.\nIt also has buttons to open and hide the various dialogs and buttons to acces the Game Menu, Surrender and Minimise functions.\nUnit Info Filter At the top right of each unit icon is the Unit Info Box.\nThis can display a range of information depending on which filter is selected.\nEach filter uses one of the Function keys as a shortcut.\nSome share the same F Key, such that hitting the key multiple times cycles through the filters assigned to that F Key.\nF1.\nTask F2.\nRout Status F3.\nStrength F4.\nCombat Power F5.\nDeployment, Facing ( Unit Deployment ) F6.\nMorale, Cohesion, Fatigue ( Unit Effectiveness ) F7.\nAmmo, Arty Ammo, Basic Supply, Fuel, Supply Line ( Unit Supply ) To change the filter:  Click on the Unit Info Filter button until the desired "
+  },
+  "cohesion": {
+    "title": "Cohesion and Suppression (Uyum ve Baskı)",
+    "pages": [
+      6,
+      44,
+      83,
+      84,
+      85,
+      104,
+      105,
+      106,
+      116,
+      117,
+      137,
+      138,
+      139,
+      140,
+      142,
+      146,
+      151,
+      167,
+      172,
+      173,
+      196,
+      198
+    ],
+    "raw_snippet": "GAME MANUAL 6 Copyright Panther Games Pty Ltd 2015.\nAll Rights Reserved.\nHold an Objective 93 Defend a Location 93 Delay the Enemy Advance 93 Withdraw to Safety 96 Engage the Enemy 97 Fire at the Enemy 97 Bombard the Enemy 98 Target an Airstrike 102 Secure, Deny and Construct Bridges 103 Deny Crossing 103 Secure Crossing 104 Construct Bridge 106 Automated Bridge Building 107 Exit Your Units Off the Map 108 Resupply Your Units 109 Review Unit Supplies 109 Determine Supplying Base 109 Review Unit Supply and Supply Line Status 110 Review Depot Data 112 Review Supply Arrival Schedule 113 Get Your Units Back in Supply 115 Rest and Wake-up Your Units 116 Recover Cohesion 116 Deploy, Dig-In, Entrench, and Fortify Your Units 117 Stop Your Units from Moving 118 Prevent Stationary Units from Changing Facing 118 Check for Enemy Threats 119 Work with Orders Delay 120 How Orders Delay is Calculated 120 Plan When to Issue Orders 121 Avoid Causing Replans 122 Understanding Game Elements 124 The Map 124 Units 125 Combat Class 125 Military Structure 125 Unit Names 129 Force Data Display 138 Combat Effectiveness 144 Mixed-Mode Movement 151 The performance of a unit across differ- ent types of terrain is determined by the unit Mobility Type.\n151 Objectives, Orders, and Tasks 153 Objectives 153 Orders 158 Unit Tasks 160 Understanding Game Processes 161 Planning 161 Getting Orders and Issuing Tasks 161 Developing the Plan 162 Reassessment 165 Reactions 165 Intelligence 166 Spotting and LOS 166 Assessing a Sighting 167 Supply 169 Ammunition 169 Fuel 169 Basics 169 Resupply 169 Movement 172 Formation Movement 172 Single-Unit Movement 172 Combat 173 Direct Fire 173 Area Fire 174 Night, Weather and Visibility 176 Victory 176 Interface – Screen by Screen 177 Startup Screen 177 Single-Player Windows 178 Scenario Selection Window 178 Game Options Window 178 Multiplayer Windows 180 Multiplayer Host Setup 180 Multiplayer Client Setup 180 Network Game Setup 180 Dialogs 182 === PAGE === GAME MANUAL 44 Copyright Panther Games Pty Ltd 2015.\nAll Rights Reserved.\nUse the Toolbar The Toolbar is located at the bottom of the screen.\nIt has a series of buttons that allow you to show, hide and filter information on unit icons and the Battlemap in general.\nIt also has buttons to open and hide the various dialogs and buttons to acces the Game Menu, Surrender and Minimise functions.\nUnit Info Filter At the top right of each unit icon is the Unit Info Box.\nThis can display a range of information depending on which filter is selected.\nEach filter uses one of the Function keys as a shortcut.\nSome share the same F Key, such that hitting the key multiple times cycles through the filters assigned to that F Key.\nF1.\nTask F2.\nRout Status F3.\nStrength F4.\nCombat Power F5.\nDeployment, Facing ( Unit Deployment ) F6.\nMorale, Cohesion, Fatigue ( Unit Effectiveness ) F7.\nAmmo, Arty Ammo, Basic Supply, Fuel, Supply Line ( Unit Supply ) To change the filter:  Click on the Unit Info Filter button until th"
+  },
+  "artillery": {
+    "title": "Artillery and Fire Support (Dolaylı Yangın ve Topçu Desteği)",
+    "pages": [
+      50,
+      89,
+      97,
+      124,
+      174,
+      181,
+      206
+    ],
+    "raw_snippet": "GAME MANUAL 50 Copyright Panther Games Pty Ltd 2015.\nAll Rights Reserved.\nRange Rings Range rings are displayed to indicate various ranges of your units pertinent to gameplay.\nThe two direct firepower types – anti-personnel (APer) (green rings), anti-armour (AArm) (red rings) each show 3 different color shades corresponding to 3 different ranges; maximum (light), effective (darker), and ambush (darkest).\nEffective range is the range at which 33% of the maxFP can be achieved.\nAmbush range is the range at which 67% of the maxFP can be achieved.\nFor indirect fire bombardment (Bombard) there is both a min (black ring) and a max (blue ring) range ring.\nThe min ring delineates the area the unit cannot bombard into.\nTo display these:  Click on the Range Ring button on the Toolbar till the desired setting is shown  Select one or more units === PAGE === 89 Copyright Panther Games Pty Ltd 2015.\nAll Rights Reserved.\nFacing  Click on the Facing control and/or drag till the arrow faces the desired direction The Facing setting only applies when the force defends the objective after the assault.\nDuring the Assault it will always face towards the ObjLoc.\nArty Direct Support Only Leave this checked ( the default ) to ensure that any assigned indirect fire support units will only support units assigned to this attack.\nIf unchecked, they may support other friendly units and not be available when needed by the assault units.\nSecure Crossing If you are launching the attack to secure a crossing, check the Secure Crossing checkbox.\nThis will cause units in the Assault Group to try and un-prime the crossing when they get close enough.\nLaunch a Complex Attack Complex attacks are those involving subHQs.\nWhen you order a unit to attack and it has one or more subHQs, it will conduct a complex attack.\nThis is similar to the basic attack, except that the HQ commanding the whole show (the Senior HQ) will go into the reserve group and the subHQs will be tasked to conduct their own attacks.\nEach subHQ will also create its own reserve group that will provide on- call support during the attack.\nIf you have not specified a FUP, the force commander is bold enough, and the force ratio is very favourable, the subHQs’ attacks may be Uncoordinated.\nIn this case, the selection of FUPs, advance routes and timings will be left to the subHQ commanders.\nThey will each plan their own attack on the objective location more or less independent of the others.\nHowever, they will avoid selecting the same FUPs, so they will assault from different locations.\n=== PAGE === 97 Copyright Panther Games Pty Ltd 2015.\nAll Rights Reserved.\nEngage the Enemy It is possible to attack the enemy without assaulting him.\nYour units provide two ways of doing this: with direct fire, using the Fire order, and with indirect fire, using the Bombard order.\nYou can also attack the enemy with Airstrikes that may be available from time to time in some scenarios.\nWhen using these orders, you must bear in mind that they al"
+  }
+}

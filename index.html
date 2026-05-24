@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>COPS-2 TAC-COM // Tactical AI Advisor & Wargame Command Suite</title>
+  <link rel="stylesheet" href="index.css">
+</head>
+<body>
+
+  <!-- Background CRT screen overlay grid is managed by body pseudo-elements -->
+  
+  <div class="app-container">
+    
+    <!-- 1. HEADER -->
+    <header class="app-header">
+      <div class="header-logo">
+        <svg viewBox="0 0 100 100" width="32" height="32" fill="none" stroke="var(--color-phosphor)" stroke-width="4">
+          <polygon points="50,15 85,75 15,75" stroke="var(--color-phosphor)" stroke-width="6"/>
+          <line x1="50" y1="35" x2="50" y2="65" stroke="var(--color-phosphor)" stroke-width="4"/>
+          <circle cx="50" cy="50" r="14" fill="none" stroke="var(--color-phosphor)" stroke-width="4"/>
+        </svg>
+        <h1>COPS-2 TAC-COM</h1>
+        <span class="header-version">TAC-HUD v1.20</span>
+      </div>
+      
+      <div class="header-status">
+        <div class="status-indicator">
+          <span class="telemetry-label">MODÜL:</span>
+          <span id="system-mode-tag" class="telemetry-value">OFFLINE VERİTABANI</span>
+        </div>
+        <div class="status-indicator">
+          <span class="status-dot" id="connection-indicator"></span>
+          <span id="connection-status-text" class="telemetry-value">AKTİF</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- 2. SIDEBAR -->
+    <aside class="app-sidebar">
+      
+      <!-- Nav Menu -->
+      <div class="sidebar-section">
+        <div class="sidebar-title">NAVİGASYON</div>
+        <nav class="nav-menu">
+          <button class="nav-item active" data-tab="tab-advisor">
+            <span class="icon">💬</span> Taktik Danışman
+          </button>
+          <button class="nav-item" data-tab="tab-calculators">
+            <span class="icon">🧮</span> Muharebe Hesaplayıcı
+          </button>
+          <button class="nav-item" data-tab="tab-symbols">
+            <span class="icon">🛡️</span> NATO Sembolleri
+          </button>
+          <button class="nav-item" data-tab="tab-scenarios">
+            <span class="icon">🗺️</span> Senaryo Planlayıcı
+          </button>
+          <button class="nav-item" data-tab="tab-manual">
+            <span class="icon">📖</span> Resmi Kılavuz Verisi
+          </button>
+        </nav>
+      </div>
+
+      <!-- Live Telemetry -->
+      <div class="sidebar-section">
+        <div class="sidebar-title">TELEMETRİ <span class="telemetry-value live">LIVE</span></div>
+        <div class="telemetry-row">
+          <span class="telemetry-label">YEREL SAAT:</span>
+          <span id="telemetry-time" class="telemetry-value">--:--:--</span>
+        </div>
+        <div class="telemetry-row">
+          <span class="telemetry-label">SEÇİLİ HARİTA:</span>
+          <span id="telemetry-map" class="telemetry-value">St. Vith</span>
+        </div>
+        <div class="telemetry-row">
+          <span class="telemetry-label">HAZIRLIK DURUMU:</span>
+          <span id="telemetry-checklist" class="telemetry-value">0/6</span>
+        </div>
+        <div class="telemetry-row">
+          <span class="telemetry-label">HQ BAĞLANTISI:</span>
+          <span class="telemetry-value" style="color: var(--color-phosphor);">ONLINE</span>
+        </div>
+      </div>
+
+      <!-- Atmospherics controls -->
+      <div class="sidebar-section">
+        <div class="sidebar-title">TELSİZ SESİ</div>
+        <div class="toggle-container">
+          <span class="telemetry-label" style="font-size: 11px;">ARKAPLAN STATİK</span>
+          <label class="toggle-switch">
+            <input type="checkbox" id="sound-toggle">
+            <span class="slider"></span>
+          </label>
+        </div>
+      </div>
+
+    </aside>
+
+    <!-- 3. MAIN SECTION -->
+    <main class="app-main">
+      
+      <!-- TAB 1: ADVISOR TERMINAL -->
+      <section id="tab-advisor" class="tab-content active">
+        <div class="screen-header">
+          <h2 class="screen-title">Taktik Kurmay Danışmanı</h2>
+          <div class="screen-subtitle">Chain of Command, Order Delay ve lojistik üzerine taktik doktrin danışmanlığı.</div>
+        </div>
+
+        <div class="advisor-grid">
+          
+          <!-- Chat Panel -->
+          <div class="chat-panel">
+            <div class="chat-header">
+              <span class="telemetry-label" style="color: var(--color-phosphor);">TACTICAL CHAT LINK</span>
+              <div class="persona-select-container">
+                <button class="persona-btn active" data-persona="staff" title="Kurmay Binbaşı">Kurmay Binbaşı</button>
+                <button class="persona-btn" data-persona="veteran" title="Gazi Çavuş">Gazi Çavuş</button>
+                <button class="persona-btn" data-persona="technical" title="Teknik Analist">Teknik Analist</button>
+              </div>
+            </div>
+
+            <!-- Messages Stream -->
+            <div class="chat-messages" id="chat-stream">
+              <div class="msg advisor">
+                <div class="msg-prefix">Sistem Girişi</div>
+                [Kurmay Binbaşı]: Hoş geldin komutan. Karargaha hoş geldin. Command Ops 2'nin karlı arazileri ve karmaşık emir zincirinde sana rehberlik etmek için buradayım. 
+                Aşağıdaki hazır sorgulardan birine tıklayarak veya doğrudan kendi sorunu yazarak başlayabilirsin. Lojistik, gecikmeler veya topçu koordinasyonunu tartışabiliriz.
+              </div>
+            </div>
+
+            <!-- Suggestions chips -->
+            <div class="chat-suggestions">
+              <div class="suggest-chip" data-question="Emir gecikmesi (Order Delay) mekanizması nedir ve nasıl yönetilir?">Emir Gecikmesi Nedir?</div>
+              <div class="suggest-chip" data-question="Lojistik ve İkmal Hatları (Line of Supply) nasıl çalışır?">İkmal Hatları Nasıl Çalışır?</div>
+              <div class="suggest-chip" data-question="Taarruza kalkmadan önce topçu bombardımanını nasıl koordine etmeliyim?">Topçu Koordinasyonu</div>
+              <div class="suggest-chip" data-question="Kış şartlarında birimlerimin yorgunluğunu (Fatigue) nasıl yönetirim?">Yorgunluk Yönetimi</div>
+            </div>
+
+            <!-- Input Bar -->
+            <form class="chat-input-bar" id="chat-form">
+              <input type="text" id="chat-user-input" class="chat-input" placeholder="Danışmana sorunuzu giriniz..." autocomplete="off">
+              <button type="submit" class="send-btn">GÖNDER</button>
+            </form>
+          </div>
+
+          <!-- Ollama Configuration Panel -->
+          <div class="config-panel">
+            <div class="sidebar-title" style="margin-bottom: 5px;">LOCAL AI YAPILANDIRMASI</div>
+            <p style="font-size: 11px; color: #7b9484; line-height: 1.4; margin-bottom: 15px;">
+              Çevrimdışı veritabanının dışına çıkmak için arka planda yerel <strong>Ollama</strong> sunucunuzu çalıştırın.
+            </p>
+
+            <div class="toggle-container" style="border-bottom: 1px solid var(--border-color); padding-bottom: 12px; margin-bottom: 12px;">
+              <span class="telemetry-label" style="font-weight: bold; color: var(--color-cyan);">OLLAMA HATTINI BAĞLA</span>
+              <label class="toggle-switch">
+                <input type="checkbox" id="ollama-active-toggle">
+                <span class="slider"></span>
+              </label>
+            </div>
+
+            <div class="config-group">
+              <label for="ollama-url-input">Ollama Server URL:</label>
+              <input type="text" id="ollama-url-input" class="config-input" value="http://localhost:11434">
+            </div>
+
+            <div class="config-group" style="margin-top: 10px;">
+              <label for="ollama-model-input">Model Adı (Otomatik Tespit):</label>
+              <select id="ollama-model-input" class="config-input">
+                <option value="gpt-oss-120">gpt-oss-120</option>
+              </select>
+            </div>
+
+            <div style="margin-top: 15px; border-top: 1px solid var(--border-color); padding-top: 15px;">
+              <div class="sidebar-title" style="font-size: 11px;">OLLAMA NASIL BAŞLATILIR?</div>
+              <ol style="padding-left: 15px; font-size: 11.5px; line-height: 1.5; color: #a4bfae; display: flex; flex-direction: column; gap: 6px;">
+                <li>Terminalinizde Ollama'nın kurulu olduğundan emin olun.</li>
+                <li>Modeli indirin veya kurun: <code style="color: var(--color-amber);">ollama pull gpt-oss-120</code> veya kendi modelinizi çalıştırın.</li>
+                <li>Ollama sunucusunu başlatın ve buradaki bağlantıyı aktifleştirin.</li>
+              </ol>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- TAB 2: CALCULATORS -->
+      <section id="tab-calculators" class="tab-content">
+        <div class="screen-header">
+          <h2 class="screen-title">Operasyonel Muharebe Hesaplayıcıları</h2>
+          <div class="screen-subtitle">HQ Emir gecikmesi tahminleme ve birimlerin arazideki gerçek taarruz/savunma güçlerini ölçün.</div>
+        </div>
+
+        <div class="calc-grid">
+          
+          <!-- Card 1: Order Delay Calculator -->
+          <div class="calc-card">
+            <h3 class="calc-title">HQ Emir Gecikmesi (Order Delay)</h3>
+
+            <div class="form-row">
+              <label for="calc-sender-level">Gönderen Karargah Seviyesi (Sender):</label>
+              <select id="calc-sender-level" class="form-select">
+                <option value="division" selected>Tümen / Division HQ (60 dk base)</option>
+                <option value="brigade">Tugay / Bde HQ (40 dk base)</option>
+                <option value="battalion">Tabur / Bn HQ (30 dk base)</option>
+              </select>
+            </div>
+
+            <div class="form-row">
+              <label for="calc-receiver-level">Alıcı Birim Seviyesi (Receiver):</label>
+              <select id="calc-receiver-level" class="form-select">
+                <option value="brigade">Tugay / Bde HQ (40 dk base)</option>
+                <option value="battalion" selected>Tabur / Bn HQ (30 dk base)</option>
+                <option value="company">Bölük / Coy (20 dk base)</option>
+              </select>
+            </div>
+            
+            <div class="form-row">
+              <label for="calc-hq-quality">HQ Lider & Kurmay Kalitesi:</label>
+              <select id="calc-hq-quality" class="form-select">
+                <option value="elite">Seçkin Kurmay (Elite / -25% delay)</option>
+                <option value="veteran">Gazi / Tecrübeli (-12% delay)</option>
+                <option value="line" selected>Nizami / Standart (0% delay)</option>
+                <option value="green">Çaylak (+12% delay)</option>
+                <option value="untrained">Eğitimsiz / Yetersiz (+25% delay)</option>
+              </select>
+            </div>
+
+            <div class="form-row">
+              <label for="calc-hq-fatigue">HQ Yorgunluk Durumu:</label>
+              <select id="calc-hq-fatigue" class="form-select">
+                <option value="fresh" selected>Zinde (Fresh)</option>
+                <option value="tired">Yorgun (Tired)</option>
+                <option value="fatigued">Çok Yorgun (Fatigued)</option>
+                <option value="exhausted">Tükenmiş (Exhausted)</option>
+              </select>
+            </div>
+
+            <div class="form-row">
+              <label for="calc-hq-suppression">HQ Çatışma / Baskı Seviyesi:</label>
+              <select id="calc-hq-suppression" class="form-select">
+                <option value="none" selected>Yok (None)</option>
+                <option value="light">Hafif Ateş Altında (Light)</option>
+                <option value="heavy">Ağır Baskı Altında (Heavy)</option>
+                <option value="pinned">Felç Olmuş / Pinned (Pinned)</option>
+              </select>
+            </div>
+
+            <div class="form-row">
+              <label for="calc-hq-comms">Haberleşme Hattı (C2 Link):</label>
+              <select id="calc-hq-comms" class="form-select">
+                <option value="excellent" selected>Mükemmel (Excellent Radio)</option>
+                <option value="degraded">Bozuk / Mesafeli (Degraded / Static)</option>
+                <option value="cut">Kopuk / Ulakla (Cut / Runners Only)</option>
+              </select>
+            </div>
+
+            <div class="form-row">
+              <label for="calc-hq-complexity">Emir Karmaşıklığı:</label>
+              <select id="calc-hq-complexity" class="form-select">
+                <option value="simple" selected>Basit Kol Hareketi / Durumsal Savunma</option>
+                <option value="moderate">Yerel Keşif / Yavaş Çekilme</option>
+                <option value="complex">Koordineli Çoklu Tabur Taarruzu</option>
+              </select>
+            </div>
+
+            <!-- Result HUD -->
+            <div class="calc-results">
+              <div class="calc-result-header">Tahmini Emir İletim Gecikmesi</div>
+              <div class="calc-result-big">
+                <span class="calc-result-num" id="result-delay-val">35</span>
+                <span class="calc-result-unit">Dakika</span>
+              </div>
+              
+              <div class="breakdown-row">
+                <span class="breakdown-label">Temel Karargah Hızı:</span>
+                <span class="breakdown-value" id="breakdown-base">35 dk</span>
+              </div>
+              <div class="breakdown-row">
+                <span class="breakdown-label">Yorgunluk Çarpanı:</span>
+                <span class="breakdown-value" id="breakdown-fatigue">x1.00</span>
+              </div>
+              <div class="breakdown-row">
+                <span class="breakdown-label">Baskılanma Çarpanı:</span>
+                <span class="breakdown-value" id="breakdown-suppression">x1.00</span>
+              </div>
+              <div class="breakdown-row">
+                <span class="breakdown-label">Haberleşme Cezası:</span>
+                <span class="breakdown-value" id="breakdown-comms">+0 dk</span>
+              </div>
+              <div class="breakdown-row">
+                <span class="breakdown-label">Plan Karmaşıklığı Cezası:</span>
+                <span class="breakdown-value" id="breakdown-complexity">+0 dk</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 2: Combat Efficiency Calculator -->
+          <div class="calc-card">
+            <h3 class="calc-title">Birim Muharebe Verimliliği & Koruma</h3>
+            
+            <div class="form-row">
+              <label for="calc-unit-power">Nominal Birim Gücü (Base Power):</label>
+              <input type="number" id="calc-unit-power" class="form-input-number" value="100" min="1" max="1000">
+            </div>
+
+            <div class="form-row">
+              <label for="calc-unit-supply">İkmal / Lojistik Durumu:</label>
+              <select id="calc-unit-supply" class="form-select">
+                <option value="full" selected>Tam İkmal (Full Supply)</option>
+                <option value="degraded">Yetersiz Mühimmat / Yakıt (Degraded)</option>
+                <option value="out">Tamamen Kesik (Out of Supply)</option>
+              </select>
+            </div>
+
+            <div class="form-row">
+              <label for="calc-unit-entrench">Mevzilenme & Konumlanma (Deployment):</label>
+              <select id="calc-unit-entrench" class="form-select">
+                <option value="undeployed">Konumlanmamış / İntikalde (Undeployed)</option>
+                <option value="taking_cover">Siper Alıyor (Taking Cover)</option>
+                <option value="deployed" selected>Konumlanmış / Muharebe Düzeni (Deployed)</option>
+                <option value="dug_in">Mevzilenmiş (Dug-In / Slit Trenches)</option>
+                <option value="entrenched">Tahkim Edilmiş (Entrenched / Roofed-over)</option>
+                <option value="fortified">Müstahkem Sığınak (Fortified / Concrete Bunker)</option>
+              </select>
+            </div>
+
+            <div class="form-row">
+              <label for="calc-unit-fatigue">Kondisyon / Yorgunluk:</label>
+              <select id="calc-unit-fatigue" class="form-select">
+                <option value="fresh" selected>Dinç (Fresh)</option>
+                <option value="tired">Yorgun (Tired)</option>
+                <option value="fatigued">Çok Yorgun (Fatigued)</option>
+                <option value="exhausted">Tükenmiş (Exhausted)</option>
+              </select>
+            </div>
+
+            <div class="form-row">
+              <label for="calc-unit-cohesion">Birim Uyum ve Bütünlüğü (Cohesion):</label>
+              <select id="calc-unit-cohesion" class="form-select">
+                <option value="high" selected>Yüksek Uyum (High)</option>
+                <option value="normal">Normal / Standart</option>
+                <option value="disorganized">Dağınık / Sarsılmış</option>
+                <option value="broken">Bozgun / Dağılmış (Broken)</option>
+              </select>
+            </div>
+
+            <div class="form-row">
+              <label for="calc-unit-terrain">Hedef / Bulunulan Arazi:</label>
+              <select id="calc-unit-terrain" class="form-select">
+                <option value="open" selected>Açık Düzlük / Ovalar (Open)</option>
+                <option value="forest">Sık Orman / Ağaçlık (Forest)</option>
+                <option value="urban">Kasaba / Taş Yapılar (Urban)</option>
+                <option value="swamp">Bataklık / Balçık Zemin (Swamp)</option>
+              </select>
+            </div>
+
+            <!-- Result HUD -->
+            <div class="calc-results">
+              <div class="calc-result-header">Gerçek Muharebe Gücü & Defansif Koruma</div>
+              
+              <div class="form-row" style="margin-bottom: 5px;">
+                <div>
+                  <span class="calc-result-header" style="font-size: 10px;">ETKİN TAARRUZ GÜCÜ</span>
+                  <div class="calc-result-big">
+                    <span class="calc-result-num green" id="result-power-val">100</span>
+                  </div>
+                </div>
+                <div>
+                  <span class="calc-result-header" style="font-size: 10px;">DEFANSİF KORUMA ORANI</span>
+                  <div class="calc-result-big">
+                    <span class="calc-result-num" id="result-def-val" style="color: var(--color-cyan); text-shadow: 0 0 10px var(--color-cyan-glow);">0</span>
+                    <span class="calc-result-unit">%</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="breakdown-row" style="margin-top: 5px;">
+                <span class="breakdown-label">Taarruz Verimlilik Derecesi:</span>
+                <span class="breakdown-value" id="breakdown-efficiency">100%</span>
+              </div>
+              <div class="efficiency-progress-bar">
+                <div class="efficiency-progress-fill" id="efficiency-fill"></div>
+              </div>
+
+              <div class="breakdown-row" style="margin-top: 8px;">
+                <span class="breakdown-label">Lojistik Kısıt Çarpanı:</span>
+                <span class="breakdown-value" id="breakdown-supply-mod">1.00</span>
+              </div>
+              <div class="breakdown-row">
+                <span class="breakdown-label">Siper Hasar Azaltma Katsayısı:</span>
+                <span class="breakdown-value" id="breakdown-entrench-mod">1.00</span>
+              </div>
+              <div class="breakdown-row">
+                <span class="breakdown-label">Arazi Örtü Doğal Koruması:</span>
+                <span class="breakdown-value" id="breakdown-terrain-cover">1.00</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- TAB 3: NATO SYMBOLS -->
+      <section id="tab-symbols" class="tab-content">
+        <div class="screen-header">
+          <h2 class="screen-title">NATO Sembolleri Ansiklopedisi</h2>
+          <div class="screen-subtitle">Command Ops 2 taktik haritasındaki askeri birlik counter'larını ve rollerini çözümleyin.</div>
+        </div>
+
+        <div class="symbols-container">
+          
+          <!-- Symbols Grid -->
+          <div class="symbols-grid" id="nato-grid-container">
+            <!-- Dynamic Injection from JS -->
+          </div>
+
+          <!-- Detail Panel -->
+          <div class="detail-pane" id="nato-detail-pane">
+            <!-- Dynamic Injection from JS -->
+          </div>
+
+        </div>
+      </section>
+
+      <!-- TAB 4: SCENARIOS & CHECKLIST -->
+      <section id="tab-scenarios" class="tab-content">
+        <div class="screen-header">
+          <h2 class="screen-title">Senaryo Planlama & Kontrol Listesi</h2>
+          <div class="screen-subtitle">Aktif haritanın taktik brifingi ve çatışmaya girmeden önce yapılması gereken operasyonel adımlar.</div>
+        </div>
+
+        <div class="scenario-layout">
+          
+          <!-- Scenario selector -->
+          <div class="scenario-list" id="scenarios-selector-list">
+            <!-- Dynamic Injection -->
+          </div>
+
+          <!-- Scenario Details and Checklist -->
+          <div class="scenario-display">
+            
+            <!-- Briefing Box -->
+            <div class="briefing-box">
+              <div class="briefing-title" id="scen-detail-name">Return to St. Vith</div>
+              <div class="telemetry-row" style="border-bottom: 1px solid var(--border-color); padding-bottom: 8px;">
+                <span class="telemetry-label">ZORLUK SEVİYESİ:</span>
+                <span class="telemetry-value" id="scen-detail-diff" style="color: var(--color-amber);">Kolay / Başlangıç</span>
+              </div>
+              <div class="telemetry-row" style="margin-top: 8px;">
+                <span class="telemetry-label">MÜTTEFİK KUVVET:</span>
+                <span class="telemetry-value" id="scen-detail-allied">ABD Birlikleri</span>
+              </div>
+              <div class="telemetry-row">
+                <span class="telemetry-label">MİHVER KUVVET:</span>
+                <span class="telemetry-value" id="scen-detail-axis">Alman Tümenleri</span>
+              </div>
+              <div class="telemetry-row">
+                <span class="telemetry-label">SENARYO SÜRESİ:</span>
+                <span class="telemetry-value" id="scen-detail-dur">48 Saat</span>
+              </div>
+              <div class="telemetry-row" style="margin-bottom: 8px;">
+                <span class="telemetry-label">MUHAREBE ALANI:</span>
+                <span class="telemetry-value" id="scen-detail-area">Belçika</span>
+              </div>
+              
+              <p class="briefing-text" id="scen-detail-brief">Senaryo brifingi yükleniyor...</p>
+            </div>
+
+            <!-- Taktik Kurmay Tavsiyeleri -->
+            <div class="advisor-tips-box">
+              <div class="advisor-tips-title">
+                <span>🎖️</span> OYUN İÇİ KURMAY TAVSİYELERİ
+              </div>
+              <ul class="tips-list" id="scen-detail-tips">
+                <!-- Dynamic Injection -->
+              </ul>
+            </div>
+
+            <!-- Pre-engagement Checklist -->
+            <div class="checklist-section">
+              <h3 class="checklist-title">Harekete Hazırlık Kontrol Listesi (Pre-Engagement Checklist)</h3>
+              <p style="font-size: 12px; color: #7b9484; margin-bottom: 15px;">
+                Oyunu başlatmadan veya zamanı akışına bırakmadan (Unpause) önce aşağıdaki 6 adımı tek tek uygulayarak durum kontrolü yapın.
+              </p>
+              
+              <div class="checklist-grid" id="checklist-container">
+                <!-- Dynamic Injection from JS -->
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </section>
+
+      <!-- TAB 5: OFFICIAL MANUAL DATABASE -->
+      <section id="tab-manual" class="tab-content">
+        <div class="screen-header">
+          <h2 class="screen-title">Resmi Kılavuz Veri Bankası (Official Manual)</h2>
+          <div class="screen-subtitle">Klasörünüzdeki CO2 Game Manual v1.2.pdf dosyasından doğrudan ayıklanmış resmi savaş alanı parametreleri ve kuralları.</div>
+        </div>
+
+        <div class="symbols-container">
+          <!-- Left side: Topics selector list -->
+          <div class="scenario-list" id="manual-topics-list">
+            <!-- Dynamically injected -->
+          </div>
+
+          <!-- Right side: Content display panel -->
+          <div class="detail-pane" id="manual-content-display" style="width: auto; max-width: none;">
+            <!-- Dynamically injected -->
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- 4. FOOTER -->
+    <footer class="app-footer">
+      <div class="footer-credits">
+        COPS-2 TAC-COM // Panther Games Command Ops 2 Tactical Assistant
+      </div>
+      <div class="system-signals">
+        <div class="signal">
+          <span class="signal-blip"></span>
+          <span>DOKTRİN UPLINK: OK</span>
+        </div>
+        <div class="signal">
+          <span class="signal-blip" style="background-color: var(--color-cyan);"></span>
+          <span>C2 LINK: ENGAGED</span>
+        </div>
+      </div>
+    </footer>
+
+  </div>
+
+  <!-- Audio Element for atmospheric loop -->
+  <audio id="atmospheric-static" loop>
+    <!-- We will use a synthesized Web Audio oscillator API in app.js instead of external files to prevent network load and guarantee instant play! -->
+  </audio>
+
+  <!-- Tactical Scripts loaded sequentially to allow local double-click execution under file:// protocol without CORS blocking -->
+  <script src="nato_symbols.js"></script>
+  <script src="scenarios.js"></script>
+  <script src="calculator.js"></script>
+  <script src="manual_database.js"></script>
+  <script src="ai_advisor.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
